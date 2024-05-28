@@ -1,55 +1,46 @@
-<ng-container *ngIf="!!recipe; else infoText">
-  <div class="row">
-    <div class="col-xs-12">
-      <img
-        [src]="recipe.imagePath"
-        alt="{{ recipe.name }}"
-        class="img-responsive"
-        style="max-height: 300px"
-      />
-    </div>
+<div class="row">
+  <div class="col-xs-12">
+    <img
+      [src]="recipe.imagePath"
+      alt="{{ recipe.name }}"
+      class="img-responsive"
+      style="max-height: 300px"
+    />
   </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h1>{{ recipe.name }}</h1>
-    </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <h1>{{ recipe.name }}</h1>
   </div>
+</div>
 
-  <div class="row">
-    <div class="col-xs-12">{{ recipe.description }}</div>
+<div class="row">
+  <div class="col-xs-12">{{ recipe.description }}</div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let ingredient of recipe.ingredients">
+        {{ ingredient.name }} - {{ ingredient.amount }}
+      </li>
+    </ul>
   </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <ul class="list-group">
-        <li
-          class="list-group-item"
-          *ngFor="let ingredient of recipe.ingredients"
-        >
-          {{ ingredient.name }} - {{ ingredient.amount }}
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div appDropdown class="btn-group">
+      <button class="btn btn-primary dropdown-toggle" type="button">
+        Manage Recipe <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <a style="cursor: pointer" (click)="onAddToShoppingList()"
+            >Add Ingredients to Shopping List</a
+          >
         </li>
+        <li><a style="cursor: pointer">Edite Recipe</a></li>
+        <li><a style="cursor: pointer">Delete Recipe</a></li>
       </ul>
     </div>
   </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <div appDropdown class="btn-group">
-        <button class="btn btn-primary dropdown-toggle" type="button">
-          Manage Recipe <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-          <li>
-            <a href="#" (click)="onAddToShoppingList()"
-              >Add Ingredients to Shopping List</a
-            >
-          </li>
-          <li><a href="#">Edite Recipe</a></li>
-          <li><a href="#">Delete Recipe</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</ng-container>
-
-<ng-template #infoText>
-  <p>Please select a Recipe!</p>
-</ng-template>
+</div>

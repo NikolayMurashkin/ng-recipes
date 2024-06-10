@@ -16,6 +16,12 @@
       (window:resize)="collapsed = true"
     >
       <ul class="nav navbar-nav">
+        <li
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a routerLink="/">Authenticate</a>
+        </li>
         <li routerLinkActive="active">
           <a routerLink="recipes">Recipes</a>
         </li>

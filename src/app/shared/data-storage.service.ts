@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { Recipe } from '../recipes/recipe.model';
 import { RecipesService } from '../recipes/recipes.service';
 import { map, tap } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

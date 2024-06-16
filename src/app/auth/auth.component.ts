@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { AuthService } from './auth.service';
+import { AuthResponseData, AuthService } from './auth.service';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -12,7 +14,7 @@ export class AuthComponent {
   isLoading = false;
   error: string = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -26,34 +28,31 @@ export class AuthComponent {
     const email = form.value.email;
     const password = form.value.password;
 
+    let authObs: Observable<AuthResponseData>;
+
     this.isLoading = true;
 
     if (this.isLoginMode) {
-      //  this.authService.login(email, password).subscribe({
-      //    next: (response) => {
-      //      console.log(response);
-      //      form.reset();
-      //    },
-      //    error: (error) => {
-      //      console.log(error);
-      //    },
-      //  });
+      authObs = this.authService.login(email, password);
       this.isLoading = false;
     } else {
-      this.authService.signUp(email, password).subscribe({
-        next: (response) => {
-          console.log(response);
-        },
-        error: (error) => {
-          this.isLoading = false;
-          this.error = error.error.error.message;
-        },
-        complete: () => {
-          this.isLoading = false;
-          console.log('complete');
-        },
-      });
+      authObs = this.authService.signUp(email, password);
     }
+    authObs.subscribe({
+      next: (response) => {
+        this.router.navigate(['/recipes']);
+        this.error = null;
+        console.log(response);
+      },
+      error: (errorMessage) => {
+        this.error = errorMessage;
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
+        console.log('complete');
+      },
+    });
     form.reset();
   }
 }

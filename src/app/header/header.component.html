@@ -18,18 +18,20 @@
       <ul class="nav navbar-nav">
         <li
           routerLinkActive="active"
+          *ngIf="!isAuthenticated"
           [routerLinkActiveOptions]="{ exact: true }"
         >
           <a routerLink="/">Authenticate</a>
         </li>
-        <li routerLinkActive="active">
+        <li routerLinkActive="active" *ngIf="isAuthenticated">
           <a routerLink="recipes">Recipes</a>
         </li>
         <li routerLinkActive="active">
           <a routerLink="shopping-list">Shopping List</a>
         </li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right" *ngIf="isAuthenticated">
+        <li><a style="cursor: pointer">Logout</a></li>
         <li class="dropdown" appDropdown>
           <a style="cursor: pointer" class="dropdown-toggle" role="button"
             >Manage <span class="caret"></span
